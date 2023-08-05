@@ -80,13 +80,16 @@ function calculateFaceMove(e) {
         span = document.createElement('span'),
         copyStyle = getComputedStyle(email),
         caretCoords = {};
+
     if (carPos == null || carPos == 0) {
-        // if browser doesn't support 'selectionEnd' property on input[type="email"], use 'value.length' property instead
+        // se o navegador não suportar a propriedade 'selectionEnd' em input[type="email"], use a propriedade 'value.length'
         carPos = email.value.length;
     }
+
     [].forEach.call(copyStyle, function (prop) {
         div.style[prop] = copyStyle[prop];
     });
+
     div.style.position = 'absolute';
     document.body.appendChild(div);
     div.textContent = email.value.substr(0, carPos);
@@ -159,12 +162,15 @@ function calculateFaceMove(e) {
     chinX = mouthX * 0.8;
     chinY = mouthY * 0.5;
     chinS = 1 - (dFromC * 0.15) / 100;
+
     if (chinS > 1) {
         chinS = 1 - (chinS - 1);
+
         if (chinS < chinMin) {
             chinS = chinMin;
         }
     }
+
     faceX = mouthX * 0.3;
     faceY = mouthY * 0.4;
     faceSkew = Math.cos(mouthAngle) * 5;
@@ -242,13 +248,15 @@ function calculateFaceMove(e) {
 
 function onEmailInput(e) {
     calculateFaceMove(e);
+
     var value = email.value;
     curEmailIndex = value.length;
 
-    // very crude email validation to trigger effects
+    // validação de e-mail muito crua para acionar efeitos
     if (curEmailIndex > 0) {
         if (mouthStatus == 'small') {
             mouthStatus = 'medium';
+
             TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, {
                 morphSVG: mouthMediumBG,
                 shapeIndex: 8,
@@ -261,10 +269,13 @@ function onEmailInput(e) {
                 scaleY: 0.85,
                 ease: Expo.easeOut,
             });
+
             eyeScale = 0.85;
         }
+
         if (value.includes('@')) {
             mouthStatus = 'large';
+
             TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, {
                 morphSVG: mouthLargeBG,
                 ease: Expo.easeOut,
@@ -277,9 +288,11 @@ function onEmailInput(e) {
                 ease: Expo.easeOut,
                 transformOrigin: 'center center',
             });
+
             eyeScale = 0.65;
         } else {
             mouthStatus = 'medium';
+
             TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, {
                 morphSVG: mouthMediumBG,
                 ease: Expo.easeOut,
@@ -291,10 +304,12 @@ function onEmailInput(e) {
                 scaleY: 0.85,
                 ease: Expo.easeOut,
             });
+
             eyeScale = 0.85;
         }
     } else {
         mouthStatus = 'small';
+
         TweenMax.to([mouthBG, mouthOutline, mouthMaskPath], 1, {
             morphSVG: mouthSmallBG,
             shapeIndex: 9,
@@ -307,12 +322,14 @@ function onEmailInput(e) {
             scaleY: 1,
             ease: Expo.easeOut,
         });
+
         eyeScale = 1;
     }
 }
 
 function onEmailFocus(e) {
     activeElement = 'email';
+
     e.target.parentElement.classList.add('focusWithText');
     //stopBlinking();
     //calculateFaceMove();
@@ -321,6 +338,7 @@ function onEmailFocus(e) {
 
 function onEmailBlur(e) {
     activeElement = null;
+
     setTimeout(function () {
         if (activeElement == 'email') {
         } else {
@@ -339,6 +357,7 @@ function onEmailLabelClick(e) {
 
 function onPasswordFocus(e) {
     activeElement = 'password';
+
     if (!eyesCovered) {
         coverEyes();
     }
@@ -346,6 +365,7 @@ function onPasswordFocus(e) {
 
 function onPasswordBlur(e) {
     activeElement = null;
+
     setTimeout(function () {
         if (activeElement == 'toggle' || activeElement == 'password') {
         } else {
@@ -356,6 +376,7 @@ function onPasswordBlur(e) {
 
 function onPasswordToggleFocus(e) {
     activeElement = 'toggle';
+
     if (!eyesCovered) {
         coverEyes();
     }
@@ -363,6 +384,7 @@ function onPasswordToggleFocus(e) {
 
 function onPasswordToggleBlur(e) {
     activeElement = null;
+
     if (!showPasswordClicked) {
         setTimeout(function () {
             if (activeElement == 'password' || activeElement == 'toggle') {
@@ -386,11 +408,13 @@ function onPasswordToggleChange(e) {
         // if checkbox is checked, show password
         if (e.target.checked) {
             password.type = 'text';
+
             spreadFingers();
 
             // if checkbox is off, hide password
         } else {
             password.type = 'password';
+
             closeFingers();
         }
     }, 100);
@@ -433,6 +457,7 @@ function coverEyes() {
         delay: 0.1,
     });
     TweenMax.to(bodyBG, 0.45, { morphSVG: bodyBGchanged, ease: Quad.easeOut });
+
     eyesCovered = true;
 }
 
@@ -450,6 +475,7 @@ function uncoverEyes() {
         },
     });
     TweenMax.to(bodyBG, 0.45, { morphSVG: bodyBG, ease: Quad.easeOut });
+
     eyesCovered = false;
 }
 
@@ -508,6 +534,7 @@ function getRandomInt(max) {
 
 function getAngle(x1, y1, x2, y2) {
     var angle = Math.atan2(y1 - y2, x1 - x2);
+
     return angle;
 }
 
@@ -540,6 +567,7 @@ function getPosition(el) {
 
 function isMobileDevice() {
     var check = false;
+
     (function (a) {
         if (
             /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(
@@ -551,6 +579,7 @@ function isMobileDevice() {
         )
             check = true;
     })(navigator.userAgent || navigator.vendor || window.opera);
+
     return check;
 }
 
