@@ -44,7 +44,7 @@ var activeElement,
     eyeScale = 1,
     eyesCovered = false,
     showPasswordClicked = false;
-	
+
 var eyeLCoords,
     eyeRCoords,
     noseCoords,
