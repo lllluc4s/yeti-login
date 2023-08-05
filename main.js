@@ -405,13 +405,13 @@ function onPasswordToggleMouseUp(e) {
 
 function onPasswordToggleChange(e) {
     setTimeout(function () {
-        // if checkbox is checked, show password
+        // se a caixa de seleção estiver marcada, mostra a senha
         if (e.target.checked) {
             password.type = 'text';
 
             spreadFingers();
 
-            // if checkbox is off, hide password
+            // se a caixa de seleção estiver desativada, ocultar a senha
         } else {
             password.type = 'password';
 
@@ -544,14 +544,14 @@ function getPosition(el) {
 
     while (el) {
         if (el.tagName == 'BODY') {
-            // deal with browser quirks with body/window/document and page scroll
+            // lidar com especificidades do navegador com body/janela/document e rolagem de página
             var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
             var yScroll = el.scrollTop || document.documentElement.scrollTop;
 
             xPos += el.offsetLeft - xScroll + el.clientLeft;
             yPos += el.offsetTop - yScroll + el.clientTop;
         } else {
-            // for all other non-BODY elements
+            // para todos os outros elementos non-BODY
             xPos += el.offsetLeft - el.scrollLeft + el.clientLeft;
             yPos += el.offsetTop - el.scrollTop + el.clientTop;
         }
@@ -584,7 +584,7 @@ function isMobileDevice() {
 }
 
 function initLoginForm() {
-    // some measurements for the svg's elements
+    // algumas medidas para os elementos do svg
     svgCoords = getPosition(mySVG);
     emailCoords = getPosition(email);
     screenCenter = svgCoords.x + mySVG.offsetWidth / 2;
@@ -593,18 +593,18 @@ function initLoginForm() {
     noseCoords = { x: svgCoords.x + 97, y: svgCoords.y + 81 };
     mouthCoords = { x: svgCoords.x + 100, y: svgCoords.y + 100 };
 
-    // handle events for email input
+    // lidar com eventos para entrada de e-mail
     email.addEventListener('focus', onEmailFocus);
     email.addEventListener('blur', onEmailBlur);
     email.addEventListener('input', onEmailInput);
     emailLabel.addEventListener('click', onEmailLabelClick);
 
-    // handle events for password input
+    // lidar com eventos para entrada de senha
     password.addEventListener('focus', onPasswordFocus);
     password.addEventListener('blur', onPasswordBlur);
     //passwordLabel.addEventListener('click', onPasswordLabelClick);
 
-    // handle events for password checkbox
+    // manipular eventos para caixa de seleção de senha
     showPasswordCheck.addEventListener('change', onPasswordToggleChange);
     showPasswordCheck.addEventListener('focus', onPasswordToggleFocus);
     showPasswordCheck.addEventListener('blur', onPasswordToggleBlur);
@@ -612,7 +612,7 @@ function initLoginForm() {
     showPasswordToggle.addEventListener('mouseup', onPasswordToggleMouseUp);
     showPasswordToggle.addEventListener('mousedown', onPasswordToggleMouseDown);
 
-    // move arms to initial positions
+    // mover os braços para as posições iniciais
     TweenMax.set(armL, {
         x: -93,
         y: 220,
@@ -626,17 +626,17 @@ function initLoginForm() {
         transformOrigin: 'top right',
     });
 
-    // set initial mouth property (fixes positioning bug)
+    // definir a propriedade inicial da boca (corrige o erro de posicionamento)
     TweenMax.set(mouth, { transformOrigin: 'center center' });
 
-    // activate blinking
+    // ativar piscando
     startBlinking(5);
 
-    // determine how far email input can go before scrolling occurs
-    // will be used as the furthest point avatar will look to the right
+    // determine até onde a entrada de e-mail pode ir antes que ocorra a rolagem
+    // será usado como o ponto mais distante que o avatar olhará para a direita
     emailScrollMax = email.scrollWidth;
 
-    // check if we're on mobile/tablet, if so then show password initially
+    // verifique se estamos no celular/tablet, em caso afirmativo, mostre a senha inicialmente
     if (isMobileDevice()) {
         password.type = 'text';
         showPasswordCheck.checked = true;
@@ -649,7 +649,6 @@ function initLoginForm() {
         });
     }
 
-    // clear the console
     console.clear();
 }
 
